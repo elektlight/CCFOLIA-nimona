@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>なにもない村 ココフォリア出力ツール</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h1 { font-size: 22px; color: #2c3e50; margin-bottom: 20px; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        label { font-weight: bold; display: block; margin-bottom: 8px; color: #34495e; }
+        input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; margin-bottom: 15px; }
+        button { width: 100%; padding: 14px; background-color: #3498db; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        button:hover { background-color: #2980b9; }
+        button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+        .error-msg { color: #e74c3c; background: #fdeaea; padding: 10px; border-radius: 4px; margin-top: 10px; display: none; font-size: 14px; }
+        .section-title { font-size: 15px; font-weight: bold; background: #eef2f5; padding: 10px; margin-top: 25px; border-left: 5px solid #3498db; }
+        textarea { width: 100%; height: 120px; padding: 10px; border: 1px solid #e0e0e0; border-radius: 4px; background-color: #fafafa; font-family: monospace; font-size: 13px; box-sizing: border-box; resize: vertical; margin-top: 5px; }
+        .copy-btn { background-color: #2ecc71; margin-top: 5px; padding: 10px; font-size: 14px; }
+        .copy-btn:hover { background-color: #27ae60; }
+        
+        /* プレビューグリッドのスタイル調整 */
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 15px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        
+        /* クリック可能なカードの演出 */
+        .card { 
+            background: #fff; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 4px; 
+            padding: 12px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02); 
+            min-height: 150px; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        /* ホバー時に「押せる」感を出す */
+        .card:hover { 
+            background: #fcfcfc;
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+        }
+        .card h3 { margin: 0 0 8px 0; font-size: 13px; color: #7f8c8d; border-bottom: 1px solid #eee; padding-bottom: 5px; pointer-events: none; }
+        .card p { margin: 0; font-size: 12px; white-space: pre-wrap; line-height: 1.5; pointer-events: none; color: #333; }
+        
+        /* コピー成功時にカードを光らせるアニメーション */
+        .card.copied {
+            animation: flashGreen 0.6s ease-out;
+        }
+        @keyframes flashGreen {
+            0% { background-color: #2ecc71; border-color: #27ae60; color: white; }
+            100% { background-color: #fff; border-color: #e0e0e0; }
+        }
+        
+        .hint { font-size: 11px; color: #95a5a6; display: block; margin-top: 2px; font-weight: normal; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>なにもない村 ココフォリア出力ツール</h1>
+    
+    <label for="sheetUrl">キャラクターシート倉庫のURL</label>
+    <input type="text" id="sheetUrl" placeholder="https://character-sheets.appspot.com/mura/edit.html?key=...">
+    
+    <button id="submitBtn" onclick="convertAndSplitOutput()">出力する</button>
+    <div id="errorArea" class="error-msg"></div>
+
+    <div class="section-title">ココフォリア用JSONデータ</div>
+    <textarea id="cellA8" readonly placeholder="ここにココフォリアに貼り付け可能なJSONが生成されます。"></textarea>
+    <button class="copy-btn" onclick="copyToClipboard()">クリップボードにコピー</button>
+
+    <div class="section-title">データプレビュー <span style="font-size:12px; color:#7f8c8d; font-weight:normal; margin-left:10px;">(各カードをクリックすると、そのテキストを個別にコピーできます)</span></div>
+    <div class="grid">
+        <div class="card" onclick="copyCardText('cellA11', this)">
+            <h3>エピック能力値 <span class="hint">クリックでコピー</span></h3>
+            <p id="cellA11">-</p>
+        </div>
+        <div class="card" onclick="copyCardText('cellB11', this)">
+            <h3>エピックスキル1 <span class="hint">クリックでコピー</span></h3>
+            <p id="cellB11">-</p>
+        </div>
+        <div class="card" onclick="copyCardText('cellC11', this)">
+            <h3>エピックスキル2 <span class="hint">クリックでコピー</span></h3>
+            <p id="cellC11">-</p>
+        </div>
+        <div class="card" onclick="copyCardText('cellD11', this)">
+            <h3>エピックスキル3 <span class="hint">クリックでコピー</span></h3>
+            <p id="cellD11">-</p>
+        </div>
+        <div class="card" onclick="copyCardText('cellE11', this)">
+            <h3>アイテム <span class="hint">クリックでコピー</span></h3>
+            <p id="cellE11">-</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ⚠️ここに取得したGASのウェブアプリURLを貼り付けてください
+    const gasWebAppUrl = "https://script.google.com/macros/s/AKfycbyVduVEsPSB0czeSUdJQSFIc3SxWtlZGXZSFxkAUJ7pQ75Xf0d_HnC2tZBJ3svZ26DAAQ/exec";
+
+    async function convertAndSplitOutput() {
+        const url = document.getElementById("sheetUrl").value.trim();
+        const errorArea = document.getElementById("errorArea");
+        const submitBtn = document.getElementById("submitBtn");
+        
+        errorArea.style.display = "none";
+        document.getElementById("cellA8").value = "";
+        document.getElementById("cellA11").innerText = "-";
+        document.getElementById("cellB11").innerText = "-";
+        document.getElementById("cellC11").innerText = "-";
+        document.getElementById("cellD11").innerText = "-";
+        document.getElementById("cellE11").innerText = "-";
+        
+        if (!url) { alert("URLを入力してください。"); return; }
+        if (gasWebAppUrl.includes("ここにコピーした")) { alert("HTMLコード内の「gasWebAppUrl」にGASのURLを設定してください。"); return; }
+
+        try {
+            submitBtn.innerText = "データ取得中...";
+            submitBtn.disabled = true;
+
+            const response = await fetch(`${gasWebAppUrl}?url=${encodeURIComponent(url)}`);
+            if (!response.ok) throw new Error("GASサーバーとの通信に失敗しました。");
+            
+            const resData = await response.json();
+            if (resData.error) throw new Error(resData.error);
+
+            const d = resData.raw;
+            const chatPalette = resData.chatPalette;
+            const params = resData.params;
+
+            // --- ココフォリア用JSONの組み立て ---
+            const outputData = {
+                "kind": "character",
+                "data": {
+                    "name": d.base?.name || "",
+                    "playerName": d.base?.player || "",
+                    "memo": `年齢: ${d.base?.age || ""} 性別: ${d.base?.sex || ""} \n家族: ${d.base?.family || ""}\n畑: ${d.base?.farm || ""} 羊: ${d.base?.sheep || ""}\n鶏: ${d.base?.chicken || ""} ペット: ${d.base?.pet || ""}\n\n村人の能力値\n［武力］${d.ability?.strength?.normal || 0}\n［速度］${d.ability?.speed?.normal || 0}\n［耐性］${d.ability?.resistance?.normal || 0}\n［精度］${d.ability?.accuracy?.normal || 0}\n［魅力］${d.ability?.charisma?.normal || 0} \n\nノーマルスキル\n《調査》${d.normalskill?.research?.normal || 0}\n《交渉》${d.normalskill?.negotiation?.normal || 0}\n《準備》${d.normalskill?.preparation?.normal || 0}\n《製作》${d.normalskill?.crafting?.normal || 0}\n《襲撃》${d.normalskill?.raid?.normal || 0}`,
+                    "initiative": 0,
+                    "externalUrl": url,
+                    "status": [
+                        {"label":"行動力","value":d.subability?.activity?.current || 0,"max":d.subability?.activity?.max || 0},
+                        {"label":"活力","value":d.subability?.vitality?.current || 0,"max":d.subability?.vitality?.max || 0},
+                        {"label":"信用","value":d.subability?.reputation?.current || 0,"max":""},
+                        {"label":"介入力","value":d.subability?.intervention?.current || 0,"max":""}
+                    ],
+                    "params": params, 
+                    "faces":[], "x":0, "y":0, "z":0, "angle":0, "width":4, "height":4,
+                    "active":true, "secret":false, "invisible":false, "hideStatus":false,
+                    "color":"","roomId":null,
+                    "commands": chatPalette,
+                    "speaking":true
+                }
+            };
+            document.getElementById("cellA8").value = JSON.stringify(outputData);
+
+            // --- プレビュー表示 ---
+            const epicAblText = `［武力］${d.ability?.strength?.epic || 0}\n［速度］${d.ability?.speed?.epic || 0}\n［耐性］${d.ability?.resistance?.epic || 0}\n［精度］${d.ability?.accuracy?.epic || 0}\n［魅力］${d.ability?.charisma?.epic || 0}`;
+            document.getElementById("cellA11").innerText = epicAblText;
+
+            const skillTargetIds = ["cellB11", "cellC11", "cellD11"];
+            if (d.skills && d.skills.length > 0) {
+                d.skills.forEach((s, index) => {
+                    if (index < skillTargetIds.length) {
+                        let skillCellContent = `《${s.name}》${s.level}\n`;
+                        if (s.move) {
+                            s.move.forEach(m => {
+                                skillCellContent += `\n${m.type}「${m.name}」\n属性: ${m.attr || ""}\n代償: ${m.cost || ""}\n使用能力値: ${m.ability || ""}\n効果: ${m.effect || ""}\n`;
+                            });
+                        }
+                        document.getElementById(skillTargetIds[index]).innerText = skillCellContent.trim();
+                    }
+                });
+            }
+
+            if (d.items && d.items.length > 0) {
+                const itemText = d.items.map(i => `・${i.name}${i.category ? ' (' + i.category + ')' : ''}`).join('\n');
+                document.getElementById("cellE11").innerText = itemText;
+            }
+
+        } catch (e) {
+            showError("エラーが発生しました: " + e.message);
+        } finally {
+            submitBtn.innerText = "出力する";
+            submitBtn.disabled = false;
+        }
+    }
+
+    function showError(message) {
+        const errorArea = document.getElementById("errorArea");
+        errorArea.innerText = message;
+        errorArea.style.display = "block";
+    }
+
+    function copyToClipboard() {
+        const textarea = document.getElementById('cellA8');
+        if(!textarea.value) return;
+        textarea.select();
+        document.execCommand('copy');
+        alert('ココフォリア用JSONをコピーしました！');
+    }
+
+    // 【新規】指定されたカード内のテキストをクリップボードにコピーする関数
+    function copyCardText(elementId, cardElement) {
+        const text = document.getElementById(elementId).innerText;
+        
+        // まだデータが出力されていない（初期状態の「-」など）の場合はコピーしない
+        if (!text || text === "-") return;
+
+        // クリップボードに書き込み
+        navigator.clipboard.writeText(text).then(() => {
+            // 成功したら「copied」クラスをつけて一時的に光らせる
+            cardElement.classList.add("copied");
+            setTimeout(() => {
+                cardElement.classList.remove("copied");
+            }, 600);
+        }).catch(err => {
+            console.error("コピーに失敗しました: ", err);
+        });
+    }
+</script>
+
+</body>
+</html>
