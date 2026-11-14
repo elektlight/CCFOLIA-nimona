@@ -8,53 +8,27 @@
         body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
         .container { max-width: 1000px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         h1 { font-size: 22px; color: #2c3e50; margin-bottom: 20px; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
-        label { font-weight: bold; display: block; margin-bottom: 8px; color: #34495e; }
-        input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; margin-bottom: 15px; }
+        label.input-label { font-weight: bold; display: block; margin-bottom: 8px; color: #34495e; }
+        input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; margin-bottom: 12px; }
+        .option-box { background: #f8fbfe; border: 1px solid #d6eaf8; border-radius: 4px; padding: 10px 14px; margin-bottom: 15px; display: flex; align-items: center; }
+        .option-box label { display: flex; align-items: center; gap: 8px; font-weight: bold; color: #2c3e50; font-size: 14px; cursor: pointer; margin: 0; user-select: none; }
+        .option-box input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #3498db; }
         button { width: 100%; padding: 14px; background-color: #3498db; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
         button:hover { background-color: #2980b9; }
         button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
-        .error-msg { color: #e74c3c; background: #fdeaea; padding: 10px; border-radius: 4px; margin-top: 10px; display: none; font-size: 14px; }
+        .error-msg { color: #e74c3c; background: #fdeaea; padding: 10px; border-radius: 4px; margin-top: 10px; display: none; font-size: 14px; margin-bottom: 15px; }
         .section-title { font-size: 15px; font-weight: bold; background: #eef2f5; padding: 10px; margin-top: 25px; border-left: 5px solid #3498db; }
         textarea { width: 100%; height: 120px; padding: 10px; border: 1px solid #e0e0e0; border-radius: 4px; background-color: #fafafa; font-family: monospace; font-size: 13px; box-sizing: border-box; resize: vertical; margin-top: 5px; }
-        .copy-btn { background-color: #2ecc71; margin-top: 5px; padding: 10px; font-size: 14px; }
+        .copy-btn { width: 100%; padding: 14px; background-color: #2ecc71; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 5px; }
         .copy-btn:hover { background-color: #27ae60; }
-        
-        /* プレビューグリッドのスタイル調整 */
         .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 15px; }
         @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
-        
-        /* クリック可能なカードの演出 */
-        .card { 
-            background: #fff; 
-            border: 1px solid #e0e0e0; 
-            border-radius: 4px; 
-            padding: 12px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02); 
-            min-height: 150px; 
-            cursor: pointer; 
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        /* ホバー時に「押せる」感を出す */
-        .card:hover { 
-            background: #fcfcfc;
-            border-color: #3498db;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
-        }
-        .card h3 { margin: 0 0 8px 0; font-size: 13px; color: #7f8c8d; border-bottom: 1px solid #eee; padding-bottom: 5px; pointer-events: none; }
-        .card p { margin: 0; font-size: 12px; white-space: pre-wrap; line-height: 1.5; pointer-events: none; color: #333; }
-        
-        /* コピー成功時にカードを光らせるアニメーション */
-        .card.copied {
-            animation: flashGreen 0.6s ease-out;
-        }
-        @keyframes flashGreen {
-            0% { background-color: #2ecc71; border-color: #27ae60; color: white; }
-            100% { background-color: #fff; border-color: #e0e0e0; }
-        }
-        
-        .hint { font-size: 11px; color: #95a5a6; display: block; margin-top: 2px; font-weight: normal; }
+        .card { background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); min-height: 180px; display: flex; flex-direction: column; }
+        .card h3 { margin: 0 0 8px 0; font-size: 13px; color: #7f8c8d; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .card-copy-btn { width: 100%; padding: 6px 10px; background-color: #ecf0f1; color: #2c3e50; border: 1px solid #bdc3c7; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; }
+        .card-copy-btn:hover { background-color: #dfe6e9; }
+        .card-copy-btn.copied { background-color: #2ecc71; color: #fff; border-color: #27ae60; }
+        .card p { margin: 0; font-size: 12px; white-space: pre-wrap; line-height: 1.5; flex-grow: 1; }
     </style>
 </head>
 <body>
@@ -62,129 +36,412 @@
 <div class="container">
     <h1>なにもない村 ココフォリア出力ツール</h1>
     
-    <label for="sheetUrl">キャラクターシート倉庫のURL</label>
-    <input type="text" id="sheetUrl" placeholder="https://character-sheets.appspot.com/mura/edit.html?key=...">
+    <label class="input-label" for="sheetUrl">キャラクターシート倉庫のURLを入力してください</label>
+    <input type="text" id="sheetUrl" placeholder="https://character-sheets.appspot.com/mura/edit.html?key=..." value="">
     
-    <button id="submitBtn" onclick="convertAndSplitOutput()">出力する</button>
+    <div class="option-box">
+        <label for="yakkaiCheck">
+            <input type="checkbox" id="yakkaiCheck" onchange="reRenderIfLoaded()">
+            厄介事シナリオ用（チェック時は(厄介事)の判定のみ出力／未チェック時は通常判定のみ出力）
+        </label>
+    </div>
+
+    <button id="submitBtn" onclick="convertAndSplitOutput()">URLからデータを出力する</button>
     <div id="errorArea" class="error-msg"></div>
 
     <div class="section-title">ココフォリア用JSONデータ</div>
-    <textarea id="cellA8" readonly placeholder="ここにココフォリアに貼り付け可能なJSONが生成されます。"></textarea>
+    <textarea id="cellA8" readonly placeholder="出力ボタンを押すと、ここにココフォリアに貼り付け可能なJSONデータが生成されます。"></textarea>
     <button class="copy-btn" onclick="copyToClipboard()">クリップボードにコピー</button>
 
-    <div class="section-title">データプレビュー <span style="font-size:12px; color:#7f8c8d; font-weight:normal; margin-left:10px;">(各カードをクリックすると、そのテキストを個別にコピーできます)</span></div>
+    <div class="section-title">カード出力エリア</div>
     <div class="grid">
-        <div class="card" onclick="copyCardText('cellA11', this)">
-            <h3>エピック能力値 <span class="hint">クリックでコピー</span></h3>
+        <div class="card">
+            <h3>A11: エピック能力値</h3>
+            <button class="card-copy-btn" onclick="copyCardText('cellA11', this)">コピー</button>
             <p id="cellA11">-</p>
         </div>
-        <div class="card" onclick="copyCardText('cellB11', this)">
-            <h3>エピックスキル1 <span class="hint">クリックでコピー</span></h3>
+        <div class="card">
+            <h3>B11: エピックスキル1</h3>
+            <button class="card-copy-btn" onclick="copyCardText('cellB11', this)">コピー</button>
             <p id="cellB11">-</p>
         </div>
-        <div class="card" onclick="copyCardText('cellC11', this)">
-            <h3>エピックスキル2 <span class="hint">クリックでコピー</span></h3>
-            <p id="cellC11">-</p>
+        <div class="card">
+            <h3>C11: エピックスキル2</h3>
+            <button class="card-copy-btn" onclick="copyCardText('cellB11_2', this)">コピー</button>
+            <p id="cellB11_2">-</p>
         </div>
-        <div class="card" onclick="copyCardText('cellD11', this)">
-            <h3>エピックスキル3 <span class="hint">クリックでコピー</span></h3>
-            <p id="cellD11">-</p>
+        <div class="card">
+            <h3>D11: エピックスキル3</h3>
+            <button class="card-copy-btn" onclick="copyCardText('cellB11_3', this)">コピー</button>
+            <p id="cellB11_3">-</p>
         </div>
-        <div class="card" onclick="copyCardText('cellE11', this)">
-            <h3>アイテム <span class="hint">クリックでコピー</span></h3>
+        <div class="card">
+            <h3>E11: アイテム</h3>
+            <button class="card-copy-btn" onclick="copyCardText('cellE11', this)">コピー</button>
             <p id="cellE11">-</p>
         </div>
     </div>
 </div>
 
 <script>
-    // ⚠️ここに取得したGASのウェブアプリURLを貼り付けてください
-    const gasWebAppUrl = "https://script.google.com/macros/s/AKfycby400X3WYMiHFdhuZK9abU_Vg1O0C-u4F4zVSTcUJ3Il7UWVEqUoBmxqcqfC88xFVptuw/exec";
+    let currentRequestUrl = "";
+    let cachedJsonData = null;
 
-    async function convertAndSplitOutput() {
+    function convertAndSplitOutput() {
         const url = document.getElementById("sheetUrl").value.trim();
         const errorArea = document.getElementById("errorArea");
-        const submitBtn = document.getElementById("submitBtn");
+        const btn = document.getElementById("submitBtn");
         
         errorArea.style.display = "none";
         document.getElementById("cellA8").value = "";
         document.getElementById("cellA11").innerText = "-";
         document.getElementById("cellB11").innerText = "-";
-        document.getElementById("cellC11").innerText = "-";
-        document.getElementById("cellD11").innerText = "-";
+        document.getElementById("cellB11_2").innerText = "-";
+        document.getElementById("cellB11_3").innerText = "-";
         document.getElementById("cellE11").innerText = "-";
         
-        if (!url) { alert("URLを入力してください。"); return; }
-        if (gasWebAppUrl.includes("ここにコピーした")) { alert("HTMLコード内の「gasWebAppUrl」にGASのURLを設定してください。"); return; }
+        if (!url) {
+            alert("URLを入力してください。");
+            return;
+        }
 
+        const keyMatch = url.match(/key=([^&]+)/);
+        if (!keyMatch) {
+            showError("エラー: URLからkeyパラメータが見つかりませんでした。");
+            return;
+        }
+        const key = keyMatch[1];
+        currentRequestUrl = url;
+
+        btn.disabled = true;
+        btn.innerText = "通信中...";
+
+        const oldScript = document.getElementById("jsonpScript");
+        if (oldScript) oldScript.remove();
+
+        const script = document.createElement("script");
+        script.id = "jsonpScript";
+        script.src = `https://character-sheets.appspot.com/mura/display?ajax=1&key=${key}&callback=myFunction`;
+        script.onerror = function() {
+            showError("エラー: データの取得に失敗しました。URLまたはネットワーク環境を確認してください。");
+            btn.disabled = false;
+            btn.innerText = "URLからデータを出力する";
+        };
+        document.body.appendChild(script);
+    }
+
+    // チェックボックス切り替え時、すでに取得済みのデータがあれば即座に再出力
+    function reRenderIfLoaded() {
+        if (cachedJsonData) {
+            renderOutput(cachedJsonData);
+        }
+    }
+
+    // APIからのJSONPコールバック受信
+    window.myFunction = function(json) {
+        const btn = document.getElementById("submitBtn");
         try {
-            submitBtn.innerText = "データ取得中...";
-            submitBtn.disabled = true;
-
-            const response = await fetch(`${gasWebAppUrl}?url=${encodeURIComponent(url)}`);
-            if (!response.ok) throw new Error("GASサーバーとの通信に失敗しました。");
-            
-            const resData = await response.json();
-            if (resData.error) throw new Error(resData.error);
-
-            const d = resData.raw;
-            const chatPalette = resData.chatPalette;
-            const params = resData.params;
-
-            // --- ココフォリア用JSONの組み立て ---
-            const outputData = {
-                "kind": "character",
-                "data": {
-                    "name": d.base?.name || "",
-                    "playerName": d.base?.player || "",
-                    "memo": `年齢: ${d.base?.age || ""} 性別: ${d.base?.sex || ""} \n家族: ${d.base?.family || ""}\n畑: ${d.base?.farm || ""} 羊: ${d.base?.sheep || ""}\n鶏: ${d.base?.chicken || ""} ペット: ${d.base?.pet || ""}\n\n村人の能力値\n［武力］${d.ability?.strength?.normal || 0}\n［速度］${d.ability?.speed?.normal || 0}\n［耐性］${d.ability?.resistance?.normal || 0}\n［精度］${d.ability?.accuracy?.normal || 0}\n［魅力］${d.ability?.charisma?.normal || 0} \n\nノーマルスキル\n《調査》${d.normalskill?.research?.normal || 0}\n《交渉》${d.normalskill?.negotiation?.normal || 0}\n《準備》${d.normalskill?.preparation?.normal || 0}\n《製作》${d.normalskill?.crafting?.normal || 0}\n《襲撃》${d.normalskill?.raid?.normal || 0}`,
-                    "initiative": 0,
-                    "externalUrl": url,
-                    "status": [
-                        {"label":"行動力","value":d.subability?.activity?.current || 0,"max":d.subability?.activity?.max || 0},
-                        {"label":"活力","value":d.subability?.vitality?.current || 0,"max":d.subability?.vitality?.max || 0},
-                        {"label":"信用","value":d.subability?.reputation?.current || 0,"max":""},
-                        {"label":"介入力","value":d.subability?.intervention?.current || 0,"max":""}
-                    ],
-                    "params": params, 
-                    "faces":[], "x":0, "y":0, "z":0, "angle":0, "width":4, "height":4,
-                    "active":true, "secret":false, "invisible":false, "hideStatus":false,
-                    "color":"","roomId":null,
-                    "commands": chatPalette,
-                    "speaking":true
-                }
-            };
-            document.getElementById("cellA8").value = JSON.stringify(outputData);
-
-            // --- プレビュー表示 ---
-            const epicAblText = `［武力］${d.ability?.strength?.epic || 0}\n［速度］${d.ability?.speed?.epic || 0}\n［耐性］${d.ability?.resistance?.epic || 0}\n［精度］${d.ability?.accuracy?.epic || 0}\n［魅力］${d.ability?.charisma?.epic || 0}`;
-            document.getElementById("cellA11").innerText = epicAblText;
-
-            const skillTargetIds = ["cellB11", "cellC11", "cellD11"];
-            if (d.skills && d.skills.length > 0) {
-                d.skills.forEach((s, index) => {
-                    if (index < skillTargetIds.length) {
-                        let skillCellContent = `《${s.name}》${s.level}\n`;
-                        if (s.move) {
-                            s.move.forEach(m => {
-                                skillCellContent += `\n${m.type}「${m.name}」\n属性: ${m.attr || ""}\n代償: ${m.cost || ""}\n使用能力値: ${m.ability || ""}\n効果: ${m.effect || ""}\n`;
-                            });
-                        }
-                        document.getElementById(skillTargetIds[index]).innerText = skillCellContent.trim();
-                    }
-                });
-            }
-
-            if (d.items && d.items.length > 0) {
-                const itemText = d.items.map(i => `・${i.name}${i.category ? ' (' + i.category + ')' : ''}`).join('\n');
-                document.getElementById("cellE11").innerText = itemText;
-            }
-
+            cachedJsonData = json;
+            renderOutput(json);
         } catch (e) {
-            showError("エラーが発生しました: " + e.message);
+            showError("データ解析エラー: " + e.message);
         } finally {
-            submitBtn.innerText = "出力する";
-            submitBtn.disabled = false;
+            btn.disabled = false;
+            btn.innerText = "URLからデータを出力する";
+        }
+    };
+
+    function renderOutput(json) {
+        const d = json.result || json;
+        const isYakkaiOnly = document.getElementById("yakkaiCheck").checked;
+
+        // 能力値・ノーマルスキルの数値抽出
+        const strNormal = String((d.ability && d.ability.strength && d.ability.strength.normal) || "0");
+        const spdNormal = String((d.ability && d.ability.speed && d.ability.speed.normal) || "0");
+        const resNormal = String((d.ability && d.ability.resistance && d.ability.resistance.normal) || "0");
+        const accNormal = String((d.ability && d.ability.accuracy && d.ability.accuracy.normal) || "0");
+        const chaNormal = String((d.ability && d.ability.charisma && d.ability.charisma.normal) || "0");
+
+        const strEpic = String((d.ability && d.ability.strength && d.ability.strength.epic) || "0");
+        const spdEpic = String((d.ability && d.ability.speed && d.ability.speed.epic) || "0");
+        const resEpic = String((d.ability && d.ability.resistance && d.ability.resistance.epic) || "0");
+        const accEpic = String((d.ability && d.ability.accuracy && d.ability.accuracy.epic) || "0");
+        const chaEpic = String((d.ability && d.ability.charisma && d.ability.charisma.epic) || "0");
+
+        const resSkill = String((d.normalskill && d.normalskill.research && d.normalskill.research.normal) || "0");
+        const negSkill = String((d.normalskill && d.normalskill.negotiation && d.normalskill.negotiation.normal) || "0");
+        const preSkill = String((d.normalskill && d.normalskill.preparation && d.normalskill.preparation.normal) || "0");
+        const craSkill = String((d.normalskill && d.normalskill.crafting && d.normalskill.crafting.normal) || "0");
+        const raiSkill = String((d.normalskill && d.normalskill.raid && d.normalskill.raid.normal) || "0");
+
+        // --- 1. params の構築 ---
+        const params = [
+            { "label": "調査", "value": resSkill },
+            { "label": "交渉", "value": negSkill },
+            { "label": "準備", "value": preSkill },
+            { "label": "製作", "value": craSkill },
+            { "label": "襲撃", "value": raiSkill },
+            { "label": "武力", "value": strNormal },
+            { "label": "速度", "value": spdNormal },
+            { "label": "耐性", "value": resNormal },
+            { "label": "精度", "value": accNormal },
+            { "label": "魅力", "value": chaNormal },
+            { "label": "エピック武力", "value": strEpic },
+            { "label": "エピック速度", "value": spdEpic },
+            { "label": "エピック耐性", "value": resEpic },
+            { "label": "エピック精度", "value": accEpic },
+            { "label": "エピック魅力", "value": chaEpic }
+        ];
+
+        // --- 2. commands (チャットパレット) の構築 ---
+        let chatPalette = `### ■能力値判定
+【武力判定】
+6NM{武力} 武力判定・簡単
+4NM{武力} 武力判定・普通
+2NM{武力} 武力判定・難しい
+6NM{エピック武力} エピック武力判定・簡単
+4NM{エピック武力} エピック武力判定・普通
+2NM{エピック武力} エピック武力判定・難しい
+
+【速度判定】
+6NM{速度} 速度判定・簡単
+4NM{速度} 速度判定・普通
+2NM{速度} 速度判定・難しい
+6NM{エピック速度} エピック速度判定・簡単
+4NM{エピック速度} エピック速度判定・普通
+2NM{エピック速度} エピック速度判定・難しい
+
+【耐性判定】
+6NM{耐性} 耐性判定・簡単
+4NM{耐性} 耐性判定・普通
+2NM{耐性} 耐性判定・難しい
+6NM{エピック耐性} エピック耐性判定・簡単
+4NM{エピック耐性} エピック耐性判定・普通
+2NM{エピック耐性} エピック耐性判定・難しい
+
+【精度判定】
+6NM{精度} 精度判定・簡単
+4NM{精度} 精度判定・普通
+2NM{精度} 精度判定・難しい
+6NM{エピック精度} エピック精度判定・簡単
+4NM{エピック精度} エピック精度判定・普通
+2NM{エピック精度} エピック精度判定・難しい
+
+【魅力判定】
+6NM{魅力} 魅力判定・簡単
+4NM{魅力} 魅力判定・普通
+2NM{魅力} 魅力判定・難しい
+6NM{エピック魅力} エピック魅力判定・簡単
+4NM{エピック魅力} エピック魅力判定・普通
+2NM{エピック魅力} エピック魅力判定・難しい`;
+
+        // チェックボックスのON/OFFで「厄介事のみ」か「通常のみ」かを切り替え
+        if (isYakkaiOnly) {
+            chatPalette += `
+
+### ■判定：調査(厄介事)
+{調査}NM{精度} 《調査》判定・「事情拝見」
+{調査}NM{エピック精度} 《調査》判定・「事情拝見」
+
+{調査}NM{魅力} 《調査》判定・「情報公開」
+{調査}NM{エピック魅力} 《調査》判定・「情報公開」
+
+### ■判定：交渉(厄介事)
+{交渉}NM{武力} 《交渉》判定・「立場変更」
+{交渉}NM{エピック武力} 《交渉》判定・「立場変更」
+{交渉}NM{魅力} 《交渉》判定・「立場変更」
+{交渉}NM{エピック魅力} 《交渉》判定・「立場変更」
+
+{交渉}NM{武力} 《交渉》判定・「絆の獲得」
+{交渉}NM{エピック武力} 《交渉》判定・「絆の獲得」
+{交渉}NM{速度} 《交渉》判定・「絆の獲得」
+{交渉}NM{エピック速度} 《交渉》判定・「絆の獲得」
+{交渉}NM{耐性} 《交渉》判定・「絆の獲得」
+{交渉}NM{エピック耐性} 《交渉》判定・「絆の獲得」
+{交渉}NM{精度} 《交渉》判定・「絆の獲得」
+{交渉}NM{エピック精度} 《交渉》判定・「絆の獲得」
+{交渉}NM{魅力} 《交渉》判定・「絆の獲得」
+{交渉}NM{エピック魅力} 《交渉》判定・「絆の獲得」
+
+### ■判定：準備(厄介事)
+{準備}NM{武力} 《準備》判定・「仕込みをする」
+{準備}NM{エピック武力} 《準備》判定・「仕込みをする」
+{準備}NM{速度} 《準備》判定・「仕込みをする」
+{準備}NM{エピック速度} 《準備》判定・「仕込みをする」
+{準備}NM{耐性} 《準備》判定・「仕込みをする」
+{準備}NM{エピック耐性} 《準備》判定・「仕込みをする」
+{準備}NM{精度} 《準備》判定・「仕込みをする」
+{準備}NM{エピック精度} 《準備》判定・「仕込みをする」
+{準備}NM{魅力} 《準備》判定・「仕込みをする」
+{準備}NM{エピック魅力} 《準備》判定・「仕込みをする」
+
+{準備}NM{武力} 《準備》判定・「能力値増加」
+{準備}NM{エピック武力} 《準備》判定・「能力値増加」
+{準備}NM{速度} 《準備》判定・「能力値増加」
+{準備}NM{エピック速度} 《準備》判定・「能力値増加」
+{準備}NM{耐性} 《準備》判定・「能力値増加」
+{準備}NM{エピック耐性} 《準備》判定・「能力値増加」
+{準備}NM{精度} 《準備》判定・「能力値増加」
+{準備}NM{エピック精度} 《準備》判定・「能力値増加」
+{準備}NM{魅力} 《準備》判定・「能力値増加」
+{準備}NM{エピック魅力} 《準備》判定・「能力値増加」
+
+### ■判定：製作(厄介事)
+{製作}NM{耐性} 《製作》判定・「アイテムを作る」
+{製作}NM{エピック耐性} 《製作》判定・「アイテムを作る」
+
+{製作}NM{武力} 《製作》判定・「衣替え」
+{製作}NM{エピック武力} 《製作》判定・「衣替え」
+{製作}NM{速度} 《製作》判定・「衣替え」
+{製作}NM{エピック速度} 《製作》判定・「衣替え」
+{製作}NM{耐性} 《製作》判定・「衣替え」
+{製作}NM{エピック耐性} 《製作》判定・「衣替え」
+{製作}NM{精度} 《製作》判定・「衣替え」
+{製作}NM{エピック精度} 《製作》判定・「衣替え」
+{製作}NM{魅力} 《製作》判定・「衣替え」
+{製作}NM{エピック魅力} 《製作》判定・「衣替え」
+
+### ■判定：襲撃(厄介事)
+{襲撃}NM{武力} 《襲撃》判定・「村人の攻撃」`;
+        } else {
+            chatPalette += `
+
+### ■判定：調査
+{調査}NM{速度} 《調査》判定・「手がかりを集める」
+{調査}NM{エピック速度} 《調査》判定・「手がかりを集める」
+
+{調査}NM{精度} 《調査》判定・「推理する」
+{調査}NM{エピック精度} 《調査》判定・「推理する」
+
+### ■判定：交渉
+{交渉}NM{魅力} 《交渉》判定・「説得する」
+{交渉}NM{エピック魅力} 《交渉》判定・「説得する」
+{交渉}NM{武力} 《交渉》判定・「威圧する」
+{交渉}NM{エピック武力} 《交渉》判定・「威圧する」
+
+### ■判定：準備
+{準備}NM{武力} 《準備》判定・「仕込みをする」
+{準備}NM{エピック武力} 《準備》判定・「仕込みをする」
+{準備}NM{速度} 《準備》判定・「仕込みをする」
+{準備}NM{エピック速度} 《準備》判定・「仕込みをする」
+{準備}NM{耐性} 《準備》判定・「仕込みをする」
+{準備}NM{エピック耐性} 《準備》判定・「仕込みをする」
+{準備}NM{精度} 《準備》判定・「仕込みをする」
+{準備}NM{エピック精度} 《準備》判定・「仕込みをする」
+{準備}NM{魅力} 《準備》判定・「仕込みをする」
+{準備}NM{エピック魅力} 《準備》判定・「仕込みをする」
+
+{準備}NM{耐性} 《準備》判定・「回復する」
+{準備}NM{エピック耐性} 《準備》判定・「回復する」
+
+### ■判定：製作
+{製作}NM{耐性} 《製作》判定・「アイテムを作る」
+{製作}NM{エピック耐性} 《製作》判定・「アイテムを作る」
+
+{製作}NM{耐性} 《製作》判定・「レアアイテムを作る」
+{製作}NM{エピック耐性} 《製作》判定・「レアアイテムを作る」
+
+### ■判定：襲撃
+{襲撃}NM{武力} 《襲撃》判定・「村人の攻撃」`;
+        }
+
+        // エピックスキル判定
+        if (d.skills && d.skills.length > 0) {
+            chatPalette += `\n\n### ■判定：エピックスキル`;
+            d.skills.forEach((s, idx) => {
+                if (idx > 0) chatPalette += `\n`;
+                chatPalette += `\n{${s.name}}NM{武力} 《${s.name}》判定・武力`;
+                chatPalette += `\n{${s.name}}NM{速度} 《${s.name}》判定・速度`;
+                chatPalette += `\n{${s.name}}NM{耐性} 《${s.name}》判定・耐性`;
+                chatPalette += `\n{${s.name}}NM{精度} 《${s.name}》判定・精度`;
+                chatPalette += `\n{${s.name}}NM{魅力} 《${s.name}》判定・魅力`;
+                chatPalette += `\n{${s.name}}NM{エピック武力} 《${s.name}》判定・エピック武力`;
+                chatPalette += `\n{${s.name}}NM{エピック速度} 《${s.name}》判定・エピック速度`;
+                chatPalette += `\n{${s.name}}NM{エピック耐性} 《${s.name}》判定・エピック耐性`;
+                chatPalette += `\n{${s.name}}NM{エピック精度} 《${s.name}》判定・エピック精度`;
+                chatPalette += `\n{${s.name}}NM{エピック魅力} 《${s.name}》判定・エピック魅力`;
+            });
+
+            chatPalette += `\n\n### ■エピックスキル・アビリティ効果`;
+            d.skills.forEach(s => {
+                if (s.move) {
+                    s.move.forEach(m => {
+                        chatPalette += `\n【${s.name}／${m.name}】(${m.type}) 代償:${m.cost || "なし"} 属性:${m.attr || "なし"} 能力:${m.ability || "なし"} ${m.effect || ""}`;
+                    });
+                }
+            });
+        }
+
+        // 所持アイテム
+        if (d.items && d.items.length > 0) {
+            chatPalette += `\n\n### ■所持アイテム`;
+            d.items.forEach(i => {
+                chatPalette += `\n・${i.name}${i.category ? ' (' + i.category + ')' : ''}${i.effect ? ' ：' + i.effect : ''}`;
+            });
+        }
+
+        // 大成功表
+        chatPalette += `\n\n/roll-table\\n大成功表\\n1D10\\n1:「成功度」人の村人が思わず拍手をした。\\n2:「成功度」本の可憐な花を見つけた。\\n3:「成功度」個の変な形の雲を見た。\\n4:「成功度」羽の小鳥が歌いながら飛んでいった。\\n5:「成功度」個のお菓子の差し入れをもらった。\\n6:「成功度」個の嬉しい思い出がよみがえった。\\n7:「成功度」 個の嫌な記憶が忘れられた。\\n8:「成功度」個のガラクタが村に蓄えられた。\\n9:「成功度」だけ任意のキャラクター1人の [活力] が 回復した。\\n10:「成功度」枚の銅貨を拾った。`;
+
+        // 代入式
+        chatPalette += `\n\n### ■代入式`;
+        if (d.skills && d.skills.length > 0) {
+            d.skills.forEach(s => {
+                chatPalette += `\n//${s.name}=${s.level || ""}`;
+            });
+        }
+
+        // --- 3. ココフォリアJSONの生成 ---
+        const actCur = Number((d.subability && d.subability.activity && d.subability.activity.current) || 0);
+        const actMax = Number((d.subability && d.subability.activity && d.subability.activity.max) || 0);
+        const vitCur = Number((d.subability && d.subability.vitality && d.subability.vitality.current) || 0);
+        const vitMax = Number((d.subability && d.subability.vitality && d.subability.vitality.max) || 0);
+        const repCur = Number((d.subability && d.subability.reputation && d.subability.reputation.current) || 0);
+        const intCur = Number((d.subability && d.subability.intervention && d.subability.intervention.current) || 0);
+
+        const outputData = {
+            "kind": "character",
+            "data": {
+                "name": (d.base && d.base.name) || "",
+                "playerName": (d.base && d.base.player) || "",
+                "memo": `年齢: ${(d.base && d.base.age) || ""} 性別: ${(d.base && d.base.sex) || ""} \n家族: ${(d.base && d.base.family) || ""}\n畑: ${(d.base && d.base.farm) || ""} 羊: ${(d.base && d.base.sheep) || ""}\n鶏: ${(d.base && d.base.chicken) || ""} ペット: ${(d.base && d.base.pet) || ""}\n\n村人の能力値\n［武力］${strNormal}\n［速度］${spdNormal}\n［耐性］${resNormal}\n［精度］${accNormal}\n［魅力］${chaNormal} \n\nノーマルスキル\n《調査》${resSkill}\n《交渉》${negSkill}\n《準備》${preSkill}\n《製作》${craSkill}\n《襲撃》${raiSkill}`,
+                "initiative": 0,
+                "externalUrl": currentRequestUrl,
+                "status": [
+                    {"label":"行動力","value":actCur,"max":actMax},
+                    {"label":"活力","value":vitCur,"max":vitMax},
+                    {"label":"信用","value":repCur,"max":""},
+                    {"label":"介入力","value":intCur,"max":""}
+                ],
+                "params": params, 
+                "faces":[], "x":0, "y":0, "z":0, "angle":0, "width":4, "height":4,
+                "active":true, "secret":false, "invisible":false, "hideStatus":false,
+                "color":"","roomId":null,
+                "commands": chatPalette,
+                "speaking":true
+            }
+        };
+        document.getElementById("cellA8").value = JSON.stringify(outputData);
+
+        // --- 4. 画面カードへの書き出し ---
+        document.getElementById("cellA11").innerText = `［武力］${strEpic}\n［速度］${spdEpic}\n［耐性］${resEpic}\n［精度］${accEpic}\n［魅力］${chaEpic}`;
+
+        const skillCards = ["cellB11", "cellB11_2", "cellB11_3"];
+        skillCards.forEach(id => { document.getElementById(id).innerText = "-"; });
+        if (d.skills && d.skills.length > 0) {
+            d.skills.forEach((s, index) => {
+                if (index < skillCards.length) {
+                    let content = `《${s.name}》${s.level}\n`;
+                    if (s.move) {
+                        s.move.forEach(m => { content += `\n${m.type}「${m.name}」\n属性: ${m.attr || ""}\n代償: ${m.cost || ""}\n使用能力値: ${m.ability || ""}\n効果: ${m.effect || ""}\n`; });
+                    }
+                    document.getElementById(skillCards[index]).innerText = content.trim();
+                }
+            });
+        }
+        document.getElementById("cellE11").innerText = "-";
+        if (d.items && d.items.length > 0) {
+            document.getElementById("cellE11").innerText = d.items.map(i => `・${i.name}${i.category ? ' (' + i.category + ')' : ''}`).join('\n');
         }
     }
 
@@ -196,28 +453,42 @@
 
     function copyToClipboard() {
         const textarea = document.getElementById('cellA8');
-        if(!textarea.value) return;
+        if(!textarea.value) return alert("コピーするデータがありません。");
         textarea.select();
         document.execCommand('copy');
-        alert('ココフォリア用JSONをコピーしました！');
+        alert('データをクリップボードにコピーしました！');
     }
 
-    // 【新規】指定されたカード内のテキストをクリップボードにコピーする関数
-    function copyCardText(elementId, cardElement) {
+    // 各カードのテキスト個別コピー機能
+    function copyCardText(elementId, btnElement) {
         const text = document.getElementById(elementId).innerText;
-        
-        // まだデータが出力されていない（初期状態の「-」など）の場合はコピーしない
-        if (!text || text === "-") return;
-
-        // クリップボードに書き込み
+        if (!text || text === "-") {
+            alert("コピーするデータがありません。");
+            return;
+        }
         navigator.clipboard.writeText(text).then(() => {
-            // 成功したら「copied」クラスをつけて一時的に光らせる
-            cardElement.classList.add("copied");
+            const originalText = btnElement.innerText;
+            btnElement.innerText = "コピー完了！";
+            btnElement.classList.add("copied");
             setTimeout(() => {
-                cardElement.classList.remove("copied");
-            }, 600);
-        }).catch(err => {
-            console.error("コピーに失敗しました: ", err);
+                btnElement.innerText = originalText;
+                btnElement.classList.remove("copied");
+            }, 1500);
+        }).catch(() => {
+            const temp = document.createElement("textarea");
+            temp.value = text;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand("copy");
+            document.body.removeChild(temp);
+            
+            const originalText = btnElement.innerText;
+            btnElement.innerText = "コピー完了！";
+            btnElement.classList.add("copied");
+            setTimeout(() => {
+                btnElement.innerText = originalText;
+                btnElement.classList.remove("copied");
+            }, 1500);
         });
     }
 </script>
